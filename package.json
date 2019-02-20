@@ -1,0 +1,28 @@
+{
+  "name": "seva-address-book",
+  "version": "1.0.0",
+  "description": "An address book web application that displays names, emails, and allows the user to edit them",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/magarcia5/seva-address-book.git"
+  },
+  "author": "Mel Alrajhi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/magarcia5/seva-address-book/issues"
+  },
+  "homepage": "https://github.com/magarcia5/seva-address-book#readme",
+  "dependencies": {
+    "browserify": "^16.2.3",
+    "express": "^4.16.4",
+    "react": "^16.8.2",
+    "react-dom": "^16.8.2"
+  },
+  "devDependencies": {
+    "watchify": "^3.11.1"
+  }
+}
