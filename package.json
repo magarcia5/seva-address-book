@@ -1,10 +1,11 @@
 {
   "name": "seva-address-book",
   "version": "1.0.0",
-  "description": "An address book web application that displays names, emails, and allows the user to edit them",
+  "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "webpack-dev-server --mode development --open",
+    "build": "webpack --mode production"
   },
   "repository": {
     "type": "git",
@@ -16,13 +17,18 @@
     "url": "https://github.com/magarcia5/seva-address-book/issues"
   },
   "homepage": "https://github.com/magarcia5/seva-address-book#readme",
-  "dependencies": {
-    "browserify": "^16.2.3",
-    "express": "^4.16.4",
-    "react": "^16.8.2",
-    "react-dom": "^16.8.2"
-  },
   "devDependencies": {
-    "watchify": "^3.11.1"
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.2.0"
+  },
+  "dependencies": {
+    "html-webpack-plugin": "^3.2.0",
+    "react": "^16.8.2",
+    "react-dom": "^16.8.2",
+    "webpack": "^4.29.5"
   }
 }
