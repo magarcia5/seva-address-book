@@ -9,9 +9,9 @@ class AddressBook extends React.Component {
     this.props.addresses.forEach(addr => {
       entries.push(
         <AddressBookEntry 
-          firstName={addr.name}
-          lastName={addr.last_name}
-          email={addr.email}
+          address={addr}
+          onEditEntry={this.props.onEditEntry}
+          onDeleteEntry={this.props.onDeleteEntry}
         />
       )
     });

@@ -3,6 +3,22 @@ body {
   background-color: #eff1f2;
 }
 
+.app__add-entry {
+  margin-top: 25px;
+  border-radius: 8px;
+}
+
+.app__add-entry-input {
+  width: 30%;
+  margin-right: 10px;
+  border-radius: 5px;
+  border:1px solid;
+}
+
+.app__add-entry-error {
+  text-align: right;
+}
+
 .add-button {
   margin-top:30px;
 }
@@ -24,6 +40,6 @@ body {
   margin-top: 10px;
 }
 
-.address-book-entry__delete {
+.left-margin {
   margin-left: 5px;
 }
