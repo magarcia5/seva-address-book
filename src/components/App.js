@@ -8,32 +8,22 @@ class App extends React.Component {
   constructor(props) {
     super(props);
 
-    // let addresses = [
-    //   {
-    //     name: 'Mel',
-    //     last_name: 'Alrajhi',
-    //     email: 'alrajhi.mel@gmail.com'
-    //   },
-    //   {
-    //     name: 'Fares',
-    //     last_name: 'Alrajhi',
-    //     email: 'alrajhi.fares@gmail.com'
-    //   }
-    // ];
-    let addresses = localStorage.getItem('address-book-entries') || [];
+    this.addresses = this.getAddressesFromLocalStorage();
 
     this.state = {
-      addresses,
+      addresses: this.addresses,
       isEditing: false,
       entryToEdit: null
     }
+
+    this.saveEntry = this.saveEntry.bind(this);
+    this.getAddressesFromLocalStorage = this.getAddressesFromLocalStorage.bind(this);
   }
 
   onAddEntry() {
-    console.log('add')
-    this.setState((prev, props) => ({
+    this.setState({
       isEditing: true
-    }));
+    });
   }
 
   onEditEntry(entry) {
@@ -44,23 +34,40 @@ class App extends React.Component {
     console.log('delete ' + entry.name);
   }
 
-  saveEntry() {
-    console.log('save');
+  saveEntry(addr) {
+    this.addresses.push(addr);
+    localStorage.setItem('address-book-entries', JSON.stringify(this.addresses));
+
+    this.setState({ 
+      addresses: this.getAddressesFromLocalStorage(),
+      isEditing: false
+    });
   }
 
-  cancelSave() {
-
+  getAddressesFromLocalStorage() {
+    let addresses = JSON.parse(localStorage.getItem('address-book-entries')) || [];
+    addresses.sort((a,b) => {
+      if (a.lastName < b.lastName) {
+        return -1;
+      }
+      if (a.lastName > b.lastName) {
+        return 1;
+      }
+      return 0;
+    });
+    return addresses;
   }
 
   render() {
-    console.log('render')
     return (
       <div className='container'>
         <button onClick={() => this.onAddEntry()} className='btn btn-primary add-button'>Add</button>
         <AddEntryForm
           saveEntry={this.saveEntry}
           isEditing={this.state.isEditing}
+          addr={this.state.addressToEdit || {}}
         />
+
         { this.state.addresses.length === 0 &&
           <div className='top-margin alert alert-light'>No addresses</div>
         }

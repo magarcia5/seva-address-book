@@ -7,34 +7,94 @@ class AddEntryForm extends React.Component {
 
     this.state = {
       isSaveError: false,
-      isEditing: this.props.isEditing
+      isEditing: this.props.isEditing,
+      addr: this.props.addr,
+      validationError: ''
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState((prev, props) => ({
-      isEditing: nextProps.isEditing
-    }));
+    this.setState({
+      isEditing: nextProps.isEditing,
+      addr: !nextProps.isEditing ? {} : this.state.addr
+    });
   }
 
   cancelSave() {
-    this.setState((prev, props) => ({
-      isEditing: false
-    }));
+    this.setState({
+      isEditing: false,
+      validationError: '',
+      addr: {}
+    });
+  }
+
+  updateAddr(e) {
+    this.setState({
+      addr: Object.assign(
+        this.state.addr, 
+        { [e.target.name] : e.target.value })
+    });
+  }
+
+  validateAndSave(addr) {
+    if(!addr.firstName && !addr.lastName && !addr.email) {
+      this.setState({
+        validationError: 'Please enter at least one field.'
+      });
+      return;
+    }
+    if (addr.email && !this.validateEmail(addr.email)) {
+        this.setState({
+          validationError: 'Please enter a valid email.'
+        });
+        return;
+    }
+   
+    this.setState({ validationError: '' });
+    this.props.saveEntry(addr);
+  }
+
+  // taken from https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
+  validateEmail(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
   }
 
   render() {
     return (
       <div className={'app__add-entry ' + (this.state.isEditing ? 'show' : 'hide')}>
       <div className='list-group-item d-flex justify-content-start'>
-        <input className='app__add-entry-input' type='text' id='first-name' placeholder='First Name'></input>
-        <input className='app__add-entry-input' type='text' id='last-name' placeholder='Last Name'></input>
-        <input className='app__add-entry-input' type='email' id='email' placeholder='Email'></input>
-        <button onClick={ () => this.props.saveEntry() } className='btn-sm btn-primary'>Save</button>
+        <input
+          className='app__add-entry-input'
+          type='text'
+          name='firstName'
+          placeholder='First Name'
+          value={this.state.addr.firstName || ''}
+          onChange={(e) => this.updateAddr(e) }
+        />
+        <input
+          className='app__add-entry-input'
+          type='text'
+          name='lastName'
+          placeholder='Last Name'
+          value={this.state.addr.lastName || ''}
+          onChange={(e) => this.updateAddr(e) }
+        />
+        <input 
+          className='app__add-entry-input' 
+          type='email' 
+          name='email'
+          placeholder='Email' 
+          value={this.state.addr.email || ''} 
+          onChange={(e) => this.updateAddr(e) }
+        />
+
+        <button onClick={ () => this.validateAndSave(this.state.addr) } className='btn-sm btn-primary'>Save</button>
         <button onClick={ () => this.cancelSave() } className='btn-sm btn-danger left-margin'>Cancel</button>
       </div>
-      { this.state.isSaveError &&
-        <div className='app__add-entry-error text-danger'>Please enter a valid email.</div>
+
+      { this.state.validationError &&
+        <div className='app__add-entry-error text-danger'>{ this.state.validationError }</div>
       }
     </div>
     );

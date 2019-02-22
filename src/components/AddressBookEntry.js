@@ -9,7 +9,7 @@ class AddressBookEntry extends React.Component {
 
     console.log(props);
     this.state = {
-      name: `${this.addr.name} ${this.addr.last_name}`
+      name: `${this.addr.firstName} ${this.addr.lastName}`
     }
   }
   render() {
