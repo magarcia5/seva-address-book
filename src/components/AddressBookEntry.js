@@ -4,12 +4,12 @@ class AddressBookEntry extends React.Component {
   render() {
 
     return (
-      <div className='book-entry'>
+      <li className='list-group-item'>
         <label className='first-name'>{ this.props.firstName }</label>
         <label className='last-name'>{ this.props.lastName }</label>
         <label className='email'>{ this.props.email }</label>
-        <button>Delete</button>
-      </div>
+        <button className='btn'>Delete</button>
+      </li>
     );
   }
 }

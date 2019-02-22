@@ -17,9 +17,9 @@ class AddressBook extends React.Component {
     });
 
     return (
-      <div className='entry-list'>
+      <ul className='list-group'>
         { entries }
-      </div>
+      </ul>
     );
 
   }
