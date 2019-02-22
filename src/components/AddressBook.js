@@ -17,7 +17,7 @@ class AddressBook extends React.Component {
     });
 
     return (
-      <ul className='list-group'>
+      <ul className='address-book list-group'>
         { entries }
       </ul>
     );

@@ -26,8 +26,8 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
-        <button className='add-button'>Add</button>
+      <div class='container'>
+        <button className='btn btn-primary add-button'>Add</button>
         { this.state.addresses.length === 0 &&
           <div className='no-addresses'>No addresses</div>
         }
