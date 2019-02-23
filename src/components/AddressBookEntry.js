@@ -7,15 +7,20 @@ class AddressBookEntry extends React.Component {
 
     this.addr = this.props.address;
 
-    console.log(props);
     this.state = {
-      name: `${this.addr.firstName} ${this.addr.lastName}`
+      name: `${this.addr.firstName} ${this.addr.lastName}`,
+      isEditing: false,
     }
   }
-  render() {
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({ isEditing: nextProps.isEditing });
+  }
+
+  render() {
+    console.log('render with ' + this.state.isEditing)
     return (
-      <li className='list-group-item address-book-entry d-flex justify-content-between'>
+      <li className='list-group-item address-book-entry d-flex justify-content-between '>
         <div>
           <div id='name'>
             <label className='address-book-entry__label'>Name</label>

@@ -11,12 +11,13 @@ class AddEntryForm extends React.Component {
       addr: this.props.addr,
       validationError: ''
     };
+
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({
       isEditing: nextProps.isEditing,
-      addr: !nextProps.isEditing ? {} : this.state.addr
+      addr: !nextProps.isEditing ? {} : nextProps.addr
     });
   }
 
@@ -26,6 +27,8 @@ class AddEntryForm extends React.Component {
       validationError: '',
       addr: {}
     });
+
+    this.props.cancelSave();
   }
 
   updateAddr(e) {

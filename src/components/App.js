@@ -8,7 +8,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
 
-    this.addresses = this.getAddressesFromLocalStorage();
+    this.addresses = this.getAddresses();
 
     this.state = {
       addresses: this.addresses,
@@ -17,7 +17,10 @@ class App extends React.Component {
     }
 
     this.saveEntry = this.saveEntry.bind(this);
-    this.getAddressesFromLocalStorage = this.getAddressesFromLocalStorage.bind(this);
+    this.getAddresses = this.getAddresses.bind(this);
+    this.saveAddresses = this.saveAddresses.bind(this);
+    this.onDeleteEntry = this.onDeleteEntry.bind(this);
+    this.onEditEntry = this.onEditEntry.bind(this);
   }
 
   onAddEntry() {
@@ -27,24 +30,29 @@ class App extends React.Component {
   }
 
   onEditEntry(entry) {
-    console.log('edting ' + entry.name);
+    console.log('edit');
   }
 
   onDeleteEntry(entry) {
-    console.log('delete ' + entry.name);
+    let index = this.addresses.findIndex(addr => addr.id === entry.id);
+    this.addresses.splice(index, 1);
+    this.saveAddresses();
+
+    this.setState({ addresses: this.getAddresses() });
   }
 
   saveEntry(addr) {
+    addr.id = new Date().getTime();
     this.addresses.push(addr);
-    localStorage.setItem('address-book-entries', JSON.stringify(this.addresses));
+    this.saveAddresses();
 
     this.setState({ 
-      addresses: this.getAddressesFromLocalStorage(),
+      addresses: this.getAddresses(),
       isEditing: false
     });
   }
 
-  getAddressesFromLocalStorage() {
+  getAddresses() {
     let addresses = JSON.parse(localStorage.getItem('address-book-entries')) || [];
     addresses.sort((a,b) => {
       if (a.lastName < b.lastName) {
@@ -58,14 +66,19 @@ class App extends React.Component {
     return addresses;
   }
 
+  saveAddresses() {
+    localStorage.setItem('address-book-entries', JSON.stringify(this.addresses));
+  }
+
   render() {
     return (
       <div className='container'>
         <button onClick={() => this.onAddEntry()} className='btn btn-primary add-button'>Add</button>
         <AddEntryForm
           saveEntry={this.saveEntry}
+          cancelSave={this.cancelSave}
           isEditing={this.state.isEditing}
-          addr={this.state.addressToEdit || {}}
+          addr={this.state.entryToEdit || {}}
         />
 
         { this.state.addresses.length === 0 &&
