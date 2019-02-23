@@ -1,12 +1,12 @@
 import React from "react";
 import AddEntryForm from './AddEntryForm'
-import { timingSafeEqual } from "crypto";
-import { runInThisContext } from "vm";
 
 class AddressBookEntry extends React.Component {
 
   constructor(props) {
     super(props);
+
+    this.originalAddressState = JSON.parse(JSON.stringify(this.props.address));
 
     this.state = {
       addr: this.props.address,
@@ -18,10 +18,6 @@ class AddressBookEntry extends React.Component {
     this.onSaveEntry = this.onSaveEntry.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({isEditing: nextProps.isEditing});
-  }
-
   onEditEntry() {
     this.setState({ isEditing: true });
   }
@@ -29,11 +25,15 @@ class AddressBookEntry extends React.Component {
   onSaveEntry() {
     this.props.onEditEntry(this.state.addr);
 
-    //this.setState({ isEditing: false });
+    this.setState({ isEditing: false});
   }
 
   cancelSave() {
-    this.setState({ isEditing: false});
+    let newCopy = JSON.parse(JSON.stringify(this.originalAddressState));
+    this.setState({ 
+      isEditing: false,
+      addr: newCopy
+    });
   }
 
   render() {

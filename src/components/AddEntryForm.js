@@ -5,8 +5,6 @@ class AddEntryForm extends React.Component {
   constructor(props) {
     super(props);
 
-    this.originalAddrState = Object.assign(this.props.addr);
-
     this.state = {
       isSaveError: false,
       isEditing: this.props.isEditing,
@@ -24,8 +22,6 @@ class AddEntryForm extends React.Component {
   }
 
   cancelSave() {
-    this.addr = this.originalAddrState;
-
     this.setState({
       isEditing: false,
       validationError: '',
