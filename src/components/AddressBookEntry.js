@@ -52,7 +52,7 @@ class AddressBookEntry extends React.Component {
           <div>
             <div id='name'>
               <label className='address-book-entry__label'>Name</label>
-              <label>{`${this.state.addr.firstName} ${this.state.addr.lastName}` }</label>
+              <label>{`${this.state.addr.firstName || ''} ${this.state.addr.lastName || ''}` }</label>
             </div>
             <div id='email'>
               <label className='address-book-entry__label'>Email</label>
