@@ -5,6 +5,8 @@ class AddEntryForm extends React.Component {
   constructor(props) {
     super(props);
 
+    this.originalAddrState = Object.assign(this.props.addr);
+
     this.state = {
       isSaveError: false,
       isEditing: this.props.isEditing,
@@ -22,6 +24,8 @@ class AddEntryForm extends React.Component {
   }
 
   cancelSave() {
+    this.addr = this.originalAddrState;
+
     this.setState({
       isEditing: false,
       validationError: '',
@@ -85,7 +89,7 @@ class AddEntryForm extends React.Component {
         />
         <input 
           className='app__add-entry-input' 
-          type='email' 
+          type='text' 
           name='email'
           placeholder='Email' 
           value={this.state.addr.email || ''} 

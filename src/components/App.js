@@ -30,7 +30,12 @@ class App extends React.Component {
   }
 
   onEditEntry(entry) {
-    console.log('edit');
+    let index = this.addresses.findIndex(addr => addr.id === entry.id);
+
+    this.addresses[index] = entry;
+    this.saveAddresses();
+
+    this.setState({ addresses: this.getAddresses() });
   }
 
   onDeleteEntry(entry) {
